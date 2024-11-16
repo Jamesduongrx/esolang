@@ -3,11 +3,15 @@ import esolang.level1_statements
 
 
 grammar = esolang.level1_statements.grammar + r"""
-    %extend start: forloop
+    %extend start: forloop 
+                | whileloop
 
     forloop: "for" NAME "in" range block
 
-    range: "range" "(" NUMBER ")"
+    range: "range" "(" start ")"
+
+    whileloop: "while" comparison block
+
 """
 parser = lark.Lark(grammar)
 
@@ -27,14 +31,49 @@ class Interpreter(esolang.level1_statements.Interpreter):
     ValueError: Variable i undefined
     '''
     def range(self, tree):
-        return range(int(tree.children[0].value))
+        if len(tree.children) == 1:
+            stop = self.visit(tree.children[0])
+            return range(0, stop)
+
+        start = self.visit(tree.children[0])
+        stop = self.visit(tree.children[1])
+        return range(start, stop)
+
 
     def forloop(self, tree):
         varname = tree.children[0].value
-        xs = self.visit(tree.children[1])
+        loop_range = self.visit(tree.children[1])
+        block = tree.children[2]
+
         self.stack.append({})
-        for x in xs:
-            self.stack[-1][varname] = x
-            result = self.visit(tree.children[2])
+        result = None
+
+        for value in loop_range:
+            self.stack[-1][varname] = value  
+            result = self.visit(block) 
         self.stack.pop()
         return result
+
+    def whileloop(self, tree):
+        x = tree.children[0]
+        y = tree.children[1]
+        self.stack.append({})
+        while self.visit(x):
+            self.visit(y)
+        self.stack.pop()
+
+    def comparison(self, tree):
+        left = self.visit(tree.children[0])
+        operator = tree.children[1].value
+        right = self.visit(tree.children[2])
+        if operator == "<": return left < right
+        if operator == "<=": return left <= right
+        if operator == ">": return left > right
+        if operator == ">=": return left >= right
+        if operator == "==": return left == right
+        if operator == "!=": return left != right
+        
+        raise ValueError(f"Unknown operator resulted in: {operator}")
+
+
+
