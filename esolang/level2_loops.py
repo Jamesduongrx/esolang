@@ -11,6 +11,14 @@ grammar = esolang.level1_statements.grammar + r"""
     range: "range" "(" start ")"
 
     whileloop: "while" comparison block
+    
+    comparison: start "<" start
+              | start ">" start
+              | start "<=" start
+              | start ">=" start
+              | start "==" start
+              | start "!=" start
+
 
 """
 parser = lark.Lark(grammar)
