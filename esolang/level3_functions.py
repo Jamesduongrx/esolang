@@ -7,13 +7,13 @@ grammar = esolang.level2_loops.grammar + r"""
     %extend start: function_call
         | function_def
 
-    function_def: "lambda" NAME ("," NAME)* ":" start
+    function_def: "lambda" NAME ("," NAME)* ":" start 
 
     ?args_list: start ("," start)*
 
     function_call: NAME "(" args_list ")"
         | NAME "(" ")"
-""""
+"""
 parser = lark.Lark(grammar)
 
 
@@ -45,6 +45,12 @@ class Interpreter(esolang.level2_loops.Interpreter):
     11
     >>> interpreter.visit(parser.parse(r"f = lambda x,y,z : x+y-z; f(5, 6, 7)"))
     4
+    >>> interpreter.visit(parser.parse(r"f = lambda x,y,z : {print(x); print(y); print(z); {z = 10; print(z);}; print(z);}; f(5, 6, 7)"))
+    5
+    6
+    7
+    10
+    10
     '''
     def __init__(self):
         super().__init__()
