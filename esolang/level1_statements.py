@@ -122,7 +122,7 @@ class Interpreter(esolang.level0_arithmetic.Interpreter):
         for signal in tree.children:  
             result = self.visit(signal)
         self.stack.pop()  
-        return re
+        return result
     def if_statement(self, tree):
         condition_result = self.visit(tree.children[0])
         
