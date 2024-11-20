@@ -14,12 +14,8 @@ grammar = esolang.level1_statements.grammar + r"""
 
     whileloop: "while" comparison block
     
-    comparison: start "<" start
-              | start ">" start
-              | start "<=" start
-              | start ">=" start
-              | start "==" start
-              | start "!=" start
+    COMPARISON_OPERATOR: ">" | "<" | ">=" | "<=" | "==" | "!="
+
 
 
 """
