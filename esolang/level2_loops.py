@@ -39,6 +39,10 @@ class Interpreter(esolang.level1_statements.Interpreter):
 
     >>> interpreter.visit(parser.parse("a=5; for i in range(a) {a = a + i}; a"))
     15
+    >>> interpreter.visit(parser.parse("a=0; while a < 10 {a = a + 1}"))
+    10
+    >>> interpreter.visit(parser.parse("a=0; while a < 5 {a = a + 1}; a"))
+    5
     >>> interpreter.visit(parser.parse("1 > 0"))
     True
     >>> interpreter.visit(parser.parse("0 > 1"))
@@ -54,7 +58,7 @@ class Interpreter(esolang.level1_statements.Interpreter):
     >>> interpreter.visit(parser.parse("a=0; for i in range(3) {a = a + i}; a"))
     3
     >>> interpreter.visit(parser.parse("a=0; while a < 5 {a = a + 2}; a"))
-    6  
+    6
     >>> interpreter.visit(parser.parse("a=0; while a < 10 {a = a + 3}; a"))
     12
     >>> interpreter.visit(parser.parse("a=5; while a > 3 {a = a - 1}; a"))
@@ -72,7 +76,6 @@ class Interpreter(esolang.level1_statements.Interpreter):
         return range(start, stop)
 
 
-
     def forloop(self, tree):
         varname = tree.children[0].value
         loop_range = self.visit(tree.children[1])
@@ -87,12 +90,12 @@ class Interpreter(esolang.level1_statements.Interpreter):
         self.stack.pop()
         return result
 
-
     def whileloop(self, tree):
         result = None
         while self.visit(tree.children[0]):
             result = self.visit(tree.children[1])
         return result
+
 
     def comparison(self, tree):
         v1 = self.visit(tree.children[0]) 
@@ -110,7 +113,6 @@ class Interpreter(esolang.level1_statements.Interpreter):
             return v1 == v2
         elif op == "!=":
             return v1 != v2
-
 
 
             
