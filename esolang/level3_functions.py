@@ -97,7 +97,12 @@ class Interpreter(esolang.level2_loops.Interpreter):
         
         return True
 
-    
+    def visit_block(self, tree):
+        result = None
+        for stmt in tree.children:
+            result = self.visit(stmt)
+        return result
+
     def range(self, tree):
         if len(tree.children) == 2:
             start = self.visit(tree.children[0])
