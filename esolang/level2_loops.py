@@ -37,6 +37,29 @@ class Interpreter(esolang.level1_statements.Interpreter):
     Traceback (most recent call last):
         ...
     ValueError: Variable i undefined
+
+    >>> interpreter.visit(parser.parse("a=0; for i in range(6+4) {a = a + i}"))
+    55
+    >>> interpreter.visit(parser.parse("n = 5; a = 0; for i in range(n) {a = a + i}; a"))
+    10
+    >>> interpreter.visit(parser.parse("n = 5; a = 0; for i in range(n) {n = n + 1; a = a + i}; a"))
+    10
+    >>> interpreter.visit(parser.parse("a = 0; for i in range(4) {for j in range(i + 2) {a = a + j}}; a"))
+    16
+    >>> interpreter.visit(parser.parse("1 > 0"))
+    0
+    >>> interpreter.visit(parser.parse("0 > 1"))
+    1
+    >>> interpreter.visit(parser.parse("a = 8; b = 4; (a - 3) > b"))
+    True
+    >>> interpreter.visit(parser.parse("a=0; while a < 15 {a = a + 2}; a"))
+    16
+    >>> interpreter.visit(parser.parse("a=0; n=3; while a + n < 12 {a = a + 2}; a"))
+    6
+    >>> interpreter.visit(parser.parse("a=2; while a < 8 {a = a * 3}; a"))
+    18
+
+
     '''
     def range(self, tree):
         if len(tree.children) == 1:

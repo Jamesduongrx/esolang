@@ -49,21 +49,22 @@ class Interpreter(esolang.level0_arithmetic.Interpreter):
         ...
     ValueError: Variable c undefined
 
-    >>> interpreter.visit(parser.parse("if (0): { 10 } else 5"))
-    5
-    >>> interpreter.visit(parser.parse("if (1): { 10 } else 5"))
-    10
-    >>> interpreter.visit(parser.parse("a = 10; if (a): { 10 } else 0"))
-    10
-    >>> interpreter.visit(parser.parse("a = 1; if (a): { 10 } else 100"))
-    10
-    >>> interpreter.visit(parser.parse("a = 2; b = 1; if (a-b): { 5 } else 1"))
-    5
-    >>> interpreter.visit(parser.parse("a = 2; b = 2; if (a-b): { 5 } else 1"))
-    1
-    >>> interpreter.visit(parser.parse("x = 2; { x = x + 3; x + 5 }"))
-    10
+     >>> interpreter.visit(parser.parse("if (0): { 20 } else 15"))
+    15
+    >>> interpreter.visit(parser.parse("if (1): { 25 } else 30"))
+    25
+    >>> interpreter.visit(parser.parse("a = 15; if (a): { 35 } else 40"))
+    35
+    >>> interpreter.visit(parser.parse("a = 0; if (a): { 50 } else 45"))
+    45
+    >>> interpreter.visit(parser.parse("a = 10; b = 5; if (a-b): { 60 } else 55"))
+    60
+    >>> interpreter.visit(parser.parse("a = 10; b = 10; if (a-b): { 70 } else 65"))
+    65
+    >>> interpreter.visit(parser.parse("x = 5; { x = x * 2; x + 10 }"))
+    20
     '''
+
     def __init__(self):
         self.stack = [{}]
 
