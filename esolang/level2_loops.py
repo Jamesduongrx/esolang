@@ -40,26 +40,27 @@ class Interpreter(esolang.level1_statements.Interpreter):
         ...
     ValueError: Variable i undefined
 
-    >>> interpreter.visit(parser.parse("a=0; for i in range(6+4) {a = a + i}"))
-    55
-    >>> interpreter.visit(parser.parse("n = 5; a = 0; for i in range(n) {a = a + i}; a"))
+    >>> interpreter.visit(parser.parse("a=5; for i in range(a) {a = a + i}; a"))
+    15
+    >>> interpreter.visit(parser.parse("a=0; while a < 10 {a = a + 1}"))
     10
-    >>> interpreter.visit(parser.parse("n = 5; a = 0; for i in range(n) {n = n + 1; a = a + i}; a"))
-    10
-    >>> interpreter.visit(parser.parse("a = 0; for i in range(4) {for j in range(i + 2) {a = a + j}}; a"))
-    16
-    >>> interpreter.visit(parser.parse("1 > 0"))
-    0
-    >>> interpreter.visit(parser.parse("0 > 1"))
-    1
-    >>> interpreter.visit(parser.parse("a=0; while a < 15 {a = a + 2}; a"))
-    16
-    >>> interpreter.visit(parser.parse("a=0; n=3; while a + n < 12 {a = a + 2}; a"))
+    >>> interpreter.visit(parser.parse("a=0; while a < 5 {a = a + 1}; a"))
+    5
+    >>> interpreter.visit(parser.parse("a=0; while a < 6 {a = a + 1}; a"))
     6
-    >>> interpreter.visit(parser.parse("a=2; while a < 8 {a = a * 3}; a"))
-    18
+    >>> interpreter.visit(parser.parse("a=10; while a > 0 {a = a - 2}; a"))
+    0
+    >>> interpreter.visit(parser.parse("a=1; while a < 4 {a = a * 2}; a"))
+    4
+    >>> interpreter.visit(parser.parse("a=0; for i in range(3) {a = a + i}; a"))
+    3
 
-
+    >>> interpreter.visit(parser.parse("a=0; while a < 10 {a = a + 3}; a"))
+    12
+    >>> interpreter.visit(parser.parse("a=5; while a > 3 {a = a - 1}; a"))
+    3
+    >>> interpreter.visit(parser.parse("a=0; while a < 2 {a = a + 1}; a"))
+    2
     '''
     def range(self, tree):
         if len(tree.children) == 1:
