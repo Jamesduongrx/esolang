@@ -45,6 +45,7 @@ import esolang.level0_arithmetic
 
 grammar = esolang.level0_arithmetic.grammar + r"""
     %extend start: start (";" start)* 
+        | ";" -> empty
         | assign_var
         | block
         | if_statement
@@ -52,7 +53,7 @@ grammar = esolang.level0_arithmetic.grammar + r"""
 
     if_statement: "if" condition ":" start "else" start
 
-    ?condition: start   
+    condition: start   
 
     block: "{" start* "}"
 
