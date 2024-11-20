@@ -44,15 +44,15 @@ import esolang.level0_arithmetic
 
 
 grammar = esolang.level0_arithmetic.grammar + r"""
-    %extend start: start (";" start)*
+    %extend start: start (";" start)* 
         | assign_var
         | block
+        | if_statement
         | /#.*/                -> comment
-        | if_statement 
-    
+
     if_statement: "if" condition ":" start "else" start
 
-    ?condition : start
+    ?condition: start   
 
     block: "{" start* "}"
 
