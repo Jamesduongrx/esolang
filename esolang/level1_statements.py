@@ -13,6 +13,14 @@ grammar = esolang.level0_arithmetic.grammar + r"""
 
     ?condition: start
 
+    ?comparison: start "==" start -> eq
+              | start "!=" start -> ne
+              | start ">" start -> gt
+              | start ">=" start -> gte
+              | start "<" start -> lt
+              | start "<=" start -> lte
+              | start
+
 
     block: "{" start* "}"
 
@@ -50,18 +58,21 @@ class Interpreter(esolang.level0_arithmetic.Interpreter):
         ...
     ValueError: Variable c undefined
 
-    >>> interpreter.visit(parser.parse("if (0): { 20 } else 15"))
-    15
+    >>> interpreter.visit(parser.parse("if (0): { 15 } else 20"))
+    20
     >>> interpreter.visit(parser.parse("if (1): { 25 } else 30"))
     25
-    >>> interpreter.visit(parser.parse("a = 15; if (a): { 35 } else 40"))
-    35
-    >>> interpreter.visit(parser.parse("a = 0; if (a): { 50 } else 45"))
-    45
-    >>> interpreter.visit(parser.parse("a = 10; b = 5; if (a-b): { 60 } else 55"))
-    60
-    >>> interpreter.visit(parser.parse("a = 10; b = 10; if (a-b): { 70 } else 65"))
-    65
+    >>> interpreter.visit(parser.parse("a = 5; if (a): { 50 } else 0"))
+    50
+    >>> interpreter.visit(parser.parse("a = 0; if (a): { 100 } else 200"))
+    200
+    >>> interpreter.visit(parser.parse("a = 3; b = 2; if (a-b): { 8 } else 4"))
+    8
+    >>> interpreter.visit(parser.parse("a = 5; b = 5; if (a-b): { 12 } else 6"))
+    6
+    >>> interpreter.visit(parser.parse("x = 3; { x = x + 4; x + 7 }"))
+    14
+
     '''
 
     def __init__(self):
