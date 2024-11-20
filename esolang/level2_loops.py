@@ -91,12 +91,11 @@ class Interpreter(esolang.level1_statements.Interpreter):
         return result
 
     def whileloop(self, tree):
-        x = tree.children[0]
-        y = tree.children[1]
-        self.stack.append({})
-        while self.visit(x):
-            self.visit(y)
-        self.stack.pop()
+        result = None
+        while self.visit(tree.children[0]):
+            result = self.visit(tree.children[1])
+        return result
+
 
     def comparison(self, tree):
         v1 = self.visit(tree.children[0]) 
