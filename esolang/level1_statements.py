@@ -118,11 +118,11 @@ class Interpreter(esolang.level0_arithmetic.Interpreter):
 
     def block(self, tree):
         self.stack.append({})  
+        result = None          
         for signal in tree.children:  
             result = self.visit(signal)
         self.stack.pop()  
-        return result
-
+        return re
     def if_statement(self, tree):
         condition_result = self.visit(tree.children[0])
         
