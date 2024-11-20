@@ -86,3 +86,26 @@ class Interpreter(esolang.level2_loops.Interpreter):
             params = params[0]
 
         return self._get_from_stack(name)(*params)
+    def is_prime(self, n):
+        if n <= 1:
+            return False
+        if n == 2:
+            return True
+        if n % 2 == 0:
+            return False
+
+        limit = int(n ** 0.5) + 1
+        for i in range(3, limit, 2):  
+            if n % i == 0:
+                return False
+        return True
+    
+    def range(self, tree):
+        if len(tree.children) == 2:
+            start = self.visit(tree.children[0])
+            end = self.visit(tree.children[1])
+        else:
+            start = 0
+            end = self.visit(tree.children[0])
+        return range(start, end)
+
