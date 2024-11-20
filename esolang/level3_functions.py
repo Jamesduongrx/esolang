@@ -62,6 +62,7 @@ class Interpreter(esolang.level2_loops.Interpreter):
         self.stack.append({})
         self.stack[0]['print'] = print
         self.stack[0]['stack'] = lambda: pprint.pprint(self.stack[1:])
+        self.stack[0]['is_prime'] = self.is_prime
 
     def function_def(self, tree):
         names = [token.value for token in tree.children[:-1]]
