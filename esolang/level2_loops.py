@@ -63,20 +63,30 @@ class Interpreter(esolang.level1_statements.Interpreter):
     2
     '''
     def range(self, tree):
+        if len(tree.children) == 1:
+            stop = self.visit(tree.children[0])
+            return range(0, stop)
+
         start = self.visit(tree.children[0])
-        return range(start)
+        stop = self.visit(tree.children[1])
+        return range(start, stop)
+
 
 
     def forloop(self, tree):
         varname = tree.children[0].value
-        xs = self.visit(tree.children[1])
+        loop_range = self.visit(tree.children[1])
+        block = tree.children[2]
+
         self.stack.append({})
         result = None
-        for x in xs:
-            self.stack[-1][varname] = x
-            result = self.visit(tree.children[2])
+
+        for value in loop_range:
+            self.stack[-1][varname] = value  
+            result = self.visit(block) 
         self.stack.pop()
         return result
+
 
     def whileloop(self, tree):
         result = None
