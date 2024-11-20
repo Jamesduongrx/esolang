@@ -49,7 +49,7 @@ class Interpreter(esolang.level0_arithmetic.Interpreter):
         ...
     ValueError: Variable c undefined
 
-     >>> interpreter.visit(parser.parse("if (0): { 20 } else 15"))
+    >>> interpreter.visit(parser.parse("if (0): { 20 } else 15"))
     15
     >>> interpreter.visit(parser.parse("if (1): { 25 } else 30"))
     25
