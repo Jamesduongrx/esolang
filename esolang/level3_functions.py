@@ -110,7 +110,6 @@ class Interpreter(esolang.level2_loops.Interpreter):
         >>> interpreter.visit(parser.parse("is_prime(4)"))
         False
         """
-
         if n < 2:
             return False
         if n == 2:
