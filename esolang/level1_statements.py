@@ -44,18 +44,15 @@ import esolang.level0_arithmetic
 
 
 grammar = esolang.level0_arithmetic.grammar + r"""
-    %extend start: start (";" start)* 
-| ";" -> empty
-        | -> empty
-        | /#.*/ -> comment
+    %extend start: start (";" start)*
         | assign_var
         | block
         | if_statement
+        | /#.*/                -> comment
 
-    if_statement: "if" "(" condition ")" ":" start "else" start
+    if_statement: "if" condition ":" start "else" start
 
-
-    condition: start   
+    ?condition: start
 
     block: "{" start* "}"
 
@@ -66,6 +63,7 @@ grammar = esolang.level0_arithmetic.grammar + r"""
     %extend atom: NAME -> access_var
 """
 parser = lark.Lark(grammar)
+
 
 
 class Interpreter(esolang.level0_arithmetic.Interpreter):
@@ -91,6 +89,21 @@ class Interpreter(esolang.level0_arithmetic.Interpreter):
     Traceback (most recent call last):
         ...
     ValueError: Variable c undefined
+    
+    >>> interpreter.visit(parser.parse("if (0): { 10 } else 5"))
+    5
+    >>> interpreter.visit(parser.parse("if (1): { 10 } else 5"))
+    10
+    >>> interpreter.visit(parser.parse("a = 10; if (a): { 10 } else 0"))
+    10
+    >>> interpreter.visit(parser.parse("a = 1; if (a): { 10 } else 100"))
+    10
+    >>> interpreter.visit(parser.parse("a = 2; b = 1; if (a-b): { 5 } else 1"))
+    5
+    >>> interpreter.visit(parser.parse("a = 2; b = 2; if (a-b): { 5 } else 1"))
+    1
+    >>> interpreter.visit(parser.parse("x = 2; { x = x + 3; x + 5 }"))
+    10
     '''
     def __init__(self):
         self.stack = [{}]
