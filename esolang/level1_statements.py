@@ -13,6 +13,14 @@ grammar = esolang.level0_arithmetic.grammar + r"""
 
     ?condition: start
 
+    ?comparison: start "==" start -> eq
+              | start "!=" start -> ne
+              | start ">" start -> gt
+              | start ">=" start -> gte
+              | start "<" start -> lt
+              | start "<=" start -> lte
+              | start
+              
     block: "{" start* "}"
 
     assign_var: NAME "=" start
