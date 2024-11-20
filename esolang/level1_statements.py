@@ -175,9 +175,9 @@ grammar = esolang.level0_arithmetic.grammar + r"""
         | if_statement
         | /#.*/                -> comment
 
-    if_statement: "if" condition ":" start "else" start
+    if_statement: "if" "(" condition ")" ":" start "else" start
 
-    ?condition: start   
+    condition: start   
 
     block: "{" start* "}"
 
