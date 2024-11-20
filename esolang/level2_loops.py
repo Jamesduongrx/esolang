@@ -97,7 +97,7 @@ class Interpreter(esolang.level1_statements.Interpreter):
 
     def comparison(self, tree):
         left = self.visit(tree.children[0])
-        operator = tree.children[1].value
+        operator = tree.children[1].value if hasattr(tree.children[1], 'value') else tree.children[1]
         right = self.visit(tree.children[2])
         if operator == "<": return left < right
         if operator == "<=": return left <= right
@@ -105,6 +105,7 @@ class Interpreter(esolang.level1_statements.Interpreter):
         if operator == ">=": return left >= right
         if operator == "==": return left == right
         if operator == "!=": return left != right
+
         
 
 
