@@ -7,8 +7,8 @@ grammar = esolang.level2_loops.grammar + r"""
     %extend start: function_call
         | function_def
 
-    function_def: "lambda" NAME ("," NAME)* ":" block
-    
+    function_def: "lambda" NAME ("," NAME)* ":" start
+
     ?args_list: start ("," start)*
 
     function_call: NAME "(" args_list ")"
