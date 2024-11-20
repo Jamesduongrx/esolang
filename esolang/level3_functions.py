@@ -9,8 +9,6 @@ grammar = esolang.level2_loops.grammar + r"""
 
     function_def: "lambda" NAME ("," NAME)* ":" (start | block)
 
-    block: "{" start* "}"
-
     ?args_list: start ("," start)*
 
     function_call: NAME "(" args_list ")"
