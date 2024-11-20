@@ -88,18 +88,15 @@ class Interpreter(esolang.level2_loops.Interpreter):
 
         return self._get_from_stack(name)(*params)
     def is_prime(self, n):
-        if n <= 1:
+        if n < 2:
             return False
-        if n == 2:
-            return True
-        if n % 2 == 0:
-            return False
-
-        limit = int(n ** 0.5) + 1
-        for i in range(3, limit, 2):  
-            if n % i == 0:
+        
+        for divisor in range(2, int(n ** 0.5) + 1):
+            if n % divisor == 0:
                 return False
+        
         return True
+
     
     def range(self, tree):
         if len(tree.children) == 2:
