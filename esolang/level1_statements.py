@@ -50,8 +50,8 @@ grammar = esolang.level0_arithmetic.grammar + r"""
         | /#.*/                -> comment
         | if_statement 
     
-    if_statement: condition "?" start ":" start
-
+    if_statement: "if" condition ":" start "else" start
+    
     ?condition : start
 
     block: "{" start* "}"
