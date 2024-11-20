@@ -5,6 +5,7 @@ import esolang.level1_statements
 grammar = esolang.level1_statements.grammar + r"""
     %extend start: forloop 
                 | whileloop
+                | comparison
 
     forloop: "for" NAME "in" range block
 
