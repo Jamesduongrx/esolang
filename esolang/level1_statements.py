@@ -124,7 +124,7 @@ class Interpreter(esolang.level0_arithmetic.Interpreter):
         self.stack.pop()  
         return result
     def if_statement(self, tree):
-        condition_result = self.visit(tree.children[0])
+        condition_result = bool(self.visit(tree.children[0])) 
         
         if condition_result:
             rightbranch = self.visit(tree.children[1])
