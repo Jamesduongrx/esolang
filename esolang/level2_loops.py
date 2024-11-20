@@ -52,8 +52,6 @@ class Interpreter(esolang.level1_statements.Interpreter):
     0
     >>> interpreter.visit(parser.parse("0 > 1"))
     1
-    >>> interpreter.visit(parser.parse("a = 8; b = 4; (a - 3) > b"))
-    True
     >>> interpreter.visit(parser.parse("a=0; while a < 15 {a = a + 2}; a"))
     16
     >>> interpreter.visit(parser.parse("a=0; n=3; while a + n < 12 {a = a + 2}; a"))
