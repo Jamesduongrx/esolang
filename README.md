@@ -1,4 +1,4 @@
-# esolang ![](https://github.com/jamesduongrx/esolang/workflows/tests/badge.svg)
+![tests](https://github.com/Jamesduongrx/esolang/workflows/tests/badge.svg?cache=0)
 
 A simple esolang for experimenting with different syntax and semantics of programming languages.
 
