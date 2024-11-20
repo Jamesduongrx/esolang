@@ -96,17 +96,24 @@ class Interpreter(esolang.level1_statements.Interpreter):
         self.stack.pop()
 
     def comparison(self, tree):
-        left = self.visit(tree.children[0])
-        right = self.visit(tree.children[2])
-        operator = tree.children[1].value
-        if operator == "<": return left < right
-        elif operator == "<=": return left <= right
-        elif operator == ">": return left > right
-        elif operator == ">=": return left >= right
-        elif operator == "==": return left == right
-        elif operator == "!=": return left != right
+        v1 = self.visit(tree.children[0])  
+        v2 = self.visit(tree.children[2])  
+        op = tree.children[1].value        
+        if op == "<":
+            return 0 if v1 < v2 else 1
+        elif op == ">":
+            return 0 if v1 > v2 else 1
+        elif op == "<=":
+            return 0 if v1 <= v2 else 1
+        elif op == ">=":
+            return 0 if v1 >= v2 else 1
+        elif op == "==":
+            return 0 if v1 == v2 else 1
+        elif op == "!=":
+            return 0 if v1 != v2 else 1
 
-        
+
+            
 
 
 
