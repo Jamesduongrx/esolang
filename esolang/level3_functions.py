@@ -7,7 +7,7 @@ grammar = esolang.level2_loops.grammar + r"""
     %extend start: function_call
         | function_def
 
-    function_def: "lambda" NAME ("," NAME)* ":" block 
+    function_def: "lambda" NAME ("," NAME)* ":" start 
 
     ?args_list: start ("," start)*
 
@@ -63,7 +63,17 @@ class Interpreter(esolang.level2_loops.Interpreter):
         self.stack[0]['print'] = print
         self.stack[0]['stack'] = lambda: pprint.pprint(self.stack[1:])
         self.stack[0]['is_prime'] = self.is_prime
-
+        
+        def is_prime(self, n):
+            if n < 2:
+                return False
+            
+            for divisor in range(2, int(n ** 0.5) + 1):
+                if n % divisor == 0:
+                    return False
+            
+            return True
+    
     def function_def(self, tree):
         names = [token.value for token in tree.children[:-1]]
         body = tree.children[-1]
@@ -87,21 +97,6 @@ class Interpreter(esolang.level2_loops.Interpreter):
             params = params[0]
 
         return self._get_from_stack(name)(*params)
-    def is_prime(self, n):
-        if n < 2:
-            return False
-        
-        for divisor in range(2, int(n ** 0.5) + 1):
-            if n % divisor == 0:
-                return False
-        
-        return True
-
-    def visit_block(self, tree):
-        result = None
-        for stmt in tree.children:
-            result = self.visit(stmt)
-        return result
 
     def range(self, tree):
         if len(tree.children) == 2:
