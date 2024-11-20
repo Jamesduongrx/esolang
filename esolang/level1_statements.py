@@ -49,11 +49,10 @@ grammar = esolang.level0_arithmetic.grammar + r"""
         | block
         | /#.*/                -> comment
         | if_statement 
-        | for_loop 
     
     if_statement: condition "?" start ":" start
-    # expression as a condition 
-     ?condition : start
+
+    ?condition : start
 
     block: "{" start* "}"
 
