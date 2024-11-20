@@ -99,6 +99,18 @@ class Interpreter(esolang.level2_loops.Interpreter):
         return range(start, end)
     
     def is_prime(self, n):
+        """
+        >>> interpreter = Interpreter()
+        >>> interpreter.visit(parser.parse("is_prime(1)"))
+        False
+        >>> interpreter.visit(parser.parse("is_prime(2)"))
+        True
+        >>> interpreter.visit(parser.parse("is_prime(3)"))
+        True
+        >>> interpreter.visit(parser.parse("is_prime(4)"))
+        False
+        """
+
         if n < 2:
             return False
         if n == 2:
