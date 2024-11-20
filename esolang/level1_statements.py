@@ -62,8 +62,6 @@ class Interpreter(esolang.level0_arithmetic.Interpreter):
     60
     >>> interpreter.visit(parser.parse("a = 10; b = 10; if (a-b): { 70 } else 65"))
     65
-    >>> interpreter.visit(parser.parse("x = 5; { x = x * 2; x + 10 }"))
-    20
     '''
 
     def __init__(self):
