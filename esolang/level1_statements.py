@@ -48,7 +48,12 @@ grammar = esolang.level0_arithmetic.grammar + r"""
         | assign_var
         | block
         | /#.*/                -> comment
-        |
+        | if_statement 
+        | for_loop 
+    
+    if_statement: condition "?" start ":" start
+    # expression as a condition 
+     ?condition : start
 
     block: "{" start* "}"
 
@@ -117,3 +122,14 @@ class Interpreter(esolang.level0_arithmetic.Interpreter):
         res = self.visit(tree.children[0])
         self.stack.pop()
         return res
+
+    def if_statement(self, tree):
+        condition_result = self.visit(tree.children[0])
+        
+        if condition_result:
+            rightbranch = self.visit(tree.children[1])
+            return rightbranch
+        else:
+            falsebranch = self.visit(tree.children[2])
+            return falsebranch
+
