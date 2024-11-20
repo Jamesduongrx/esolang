@@ -6,6 +6,7 @@ grammar = esolang.level1_statements.grammar + r"""
     %extend start: forloop 
                 | whileloop
                 | comparison
+                | range 
 
     forloop: "for" NAME "in" range block
 
@@ -105,7 +106,6 @@ class Interpreter(esolang.level1_statements.Interpreter):
         if operator == "==": return left == right
         if operator == "!=": return left != right
         
-        raise ValueError(f"Unknown operator resulted in: {operator}")
 
 
 
