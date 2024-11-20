@@ -7,7 +7,9 @@ grammar = esolang.level2_loops.grammar + r"""
     %extend start: function_call
         | function_def
 
-    function_def: "lambda" NAME ("," NAME)* ":" start
+    function_def: "lambda" NAME ("," NAME)* ":" block
+
+    block: "{" start* "}"
 
     ?args_list: start ("," start)*
 
@@ -99,12 +101,14 @@ class Interpreter(esolang.level2_loops.Interpreter):
         return range(start, end)
     
     def is_prime(self, n):
-            if n < 2:
-                return False
-            
-            for divisor in range(2, int(n ** 0.5) + 1):
-                if n % divisor == 0:
-                    return False
-            
+        if n < 2:
+            return False
+        if n == 2:
             return True
+        if n % 2 == 0:
+            return False
+        for divisor in range(3, int(n ** 0.5) + 1, 2):
+            if n % divisor == 0:
+                return False
+        return True
 
