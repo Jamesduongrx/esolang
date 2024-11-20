@@ -51,7 +51,7 @@ grammar = esolang.level0_arithmetic.grammar + r"""
         | if_statement 
     
     if_statement: "if" condition ":" start "else" start
-    
+
     ?condition : start
 
     block: "{" start* "}"
@@ -117,10 +117,11 @@ class Interpreter(esolang.level0_arithmetic.Interpreter):
         return self._get_from_stack(name)
 
     def block(self, tree):
-        self.stack.append({})
-        res = self.visit(tree.children[0])
-        self.stack.pop()
-        return res
+        self.stack.append({})  
+        for signal in tree.children:  
+            result = self.visit(signal)
+        self.stack.pop()  
+        return result
 
     def if_statement(self, tree):
         condition_result = self.visit(tree.children[0])
