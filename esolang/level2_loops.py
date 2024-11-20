@@ -12,10 +12,11 @@ grammar = esolang.level1_statements.grammar + r"""
 
     range: "range" "(" start ")"
 
-    whileloop: "while" comparison block
-    
+    comparison: start COMPARISON_OPERATOR start
+
     COMPARISON_OPERATOR: ">" | "<" | ">=" | "<=" | "==" | "!="
 
+    whileloop: "while" comparison block
 
 
 """
@@ -98,14 +99,22 @@ class Interpreter(esolang.level1_statements.Interpreter):
         self.stack.pop()
 
     def comparison(self, tree):
-        v1 = self.visit(tree.children[0])
-        op = tree.children[1].value
-        v2 = self.visit(tree.children[2])
-        if eval(str(v1) + op + str(v2)):
-            return 0
-        else:
-            return 1
-        pass
+        v1 = self.visit(tree.children[0]) 
+        op = tree.children[1].value      
+        v2 = self.visit(tree.children[2])  
+        if op == ">":
+            return v1 > v2
+        elif op == "<":
+            return v1 < v2
+        elif op == ">=":
+            return v1 >= v2
+        elif op == "<=":
+            return v1 <= v2
+        elif op == "==":
+            return v1 == v2
+        elif op == "!=":
+            return v1 != v2
+
 
 
             
